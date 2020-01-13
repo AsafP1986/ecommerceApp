@@ -1,7 +1,10 @@
 var express = require("express");
 var cors = require("cors");
-const auth = require("../middleware/auth");
-const adminAuth = require("../middleware/adminAuth");
+var jwt = require("express-jwt");
+var auth = jwt({
+  secret: "asss",
+  userProperty: "payload"
+});
 
 var router = express.Router();
 var shopController = require("../controllers/shopcontroller");
@@ -13,8 +16,8 @@ router.get("/status", shopController.getStatus);
 router.get("/products", auth, shopController.getAllproducts);
 
 /* post new product */
-router.post("/products/add", adminAuth, shopController.addProduct);
-router.post("/products/edit", adminAuth, shopController.editProduct);
+router.post("/products/add", auth, shopController.addProduct);
+router.post("/products/edit", auth, shopController.editProduct);
 /* categories */
 
 router.get("/categories", auth, shopController.getAllCategories);

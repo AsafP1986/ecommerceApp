@@ -1,6 +1,14 @@
 var express = require("express");
 var router = express.Router();
 
+var passport = require("passport");
+var mongoose = require("mongoose");
+var jwt = require("express-jwt");
+var auth = jwt({
+  secret: "asss",
+  userProperty: "payload"
+});
+
 const UsersModel = require("../models/User");
 const CartsModel = require("../models/Cart");
 const OrdersModel = require("../models/Order");
@@ -8,7 +16,7 @@ const CartItemsModel = require("../models/CartItem");
 
 /* GET users listing. */
 router.post("/check", function(req, res, next) {
-  console.log("req.body :", req.body.body);
+  console.log("req.body :", req.body.username);
   UsersModel.findOne({ user_name: req.body.body }, (err, user) => {
     if (err) {
       console.error(err);
@@ -23,17 +31,16 @@ router.post("/check", function(req, res, next) {
 });
 
 router.post("/add", function(req, res, next) {
-  console.log("req.body :", req.body.body);
+  console.log("req.body :", req.body.user);
   UsersModel.create(
     {
-      first_name: req.body.body.first_name,
-      last_name: req.body.body.last_name,
-      user_name: req.body.body.user_name,
-      e_mail: req.body.body.e_mail,
-      password: req.body.body.password,
+      first_name: req.body.user.first_name,
+      last_name: req.body.user.last_name,
+      user_name: req.body.user.user_name,
+      e_mail: req.body.user.e_mail,
       adress: {
-        city: req.body.body.city,
-        street: req.body.body.street
+        city: req.body.user.city,
+        street: req.body.user.street
       },
       role: 0
     },
@@ -41,46 +48,77 @@ router.post("/add", function(req, res, next) {
       if (err) {
         console.error(err);
       }
-      console.log("user :", user);
-      res.send({ msg: "created" });
+      user.setPassword(req.body.user.password);
+      user.save(function(err) {
+        var token;
+        token = user.generateJwt();
+        res.status(200);
+        res.json({
+          token: token,
+          msg: "created"
+        });
+      });
     }
   );
 });
 
-router.get("/getuser", function(req, res, next) {
-  let user = req.session.user;
-  console.log("req.session.user :", req.session.user);
+// router.get("/getuser", function(req, res, next) {
+//   let user = req.session.user;
+//   console.log("req.session.user :", req.session.user);
 
-  if (user === undefined) {
-    res.send({ msg: "no user" });
-    console.log("no user");
-  } else {
-    res.json({ user });
-  }
-});
+//   if (user === undefined) {
+//     res.send({ msg: "no user" });
+//     console.log("no user");
+//   } else {
+//     res.json({ user });
+//   }
+// });
 
 router.post("/login", function(req, res, next) {
-  console.log("req.body :", req.body.body.username);
-  UsersModel.findOne({ user_name: req.body.body.username }, (err, user) => {
+  passport.authenticate("local", function(err, user, info) {
+    var token;
+    console.log("user in passport", user);
     if (err) {
-      console.error(err);
+      console.log("// If Passport throws/catches an error");
+      res.status(404).json(err);
+      return;
     }
-    console.log("user :", user);
-    if (user === null) {
-      res.json({ msg: "user name not registered" });
+    if (user) {
+      console.log("// If a user is found");
+      token = user.generateJwt();
+      res.status(200);
+      res.send({
+        token: token,
+        msg: "good credantials"
+      });
     } else {
-      if (user.password == req.body.body.password) {
-        let session = req.session;
-        session.user = user;
-        console.log("session :", session);
-        res.json({ msg: "good credantials", user: user });
-        console.log("session username:", session.user.user_name);
-      } else {
-        res.json({ msg: "wrong password" });
-      }
+      console.log("// If user is not found", info);
+      res.send({ msg: info.message });
     }
-  });
+  })(req, res, next);
 });
+
+// console.log("req.body :", req.body.body.username);
+// UsersModel.findOne({ user_name: req.body.body.username }, (err, user) => {
+//   if (err) {
+//     console.error(err);
+//   }
+//   console.log("user :", user);
+//   if (user === null) {
+//     res.json({ msg: "user name not registered" });
+//   } else {
+//     if (user.password == req.body.body.password) {
+//       let session = req.session;
+//       session.user = user;
+//       console.log("session :", session);
+//       res.json({ msg: "good credantials", user: user });
+//       console.log("session username:", session.user.user_name);
+//     } else {
+//       res.json({ msg: "wrong password" });
+//     }
+//   }
+// });
+// );
 
 router.get("/logout", function(req, res, next) {
   console.log("req.session", req.session);
@@ -93,8 +131,8 @@ router.get("/logout", function(req, res, next) {
 });
 
 router.post("/getshopstatus", function(req, res, next) {
-  console.log("req.body :", req.body.body);
-  let userId = req.body.body;
+  console.log("req.body :", req.body.userId);
+  let userId = req.body.userId;
   CartsModel.find({ user: userId }, (err, carts) => {
     if (err) {
       console.error(err);
@@ -125,7 +163,7 @@ router.post("/getshopstatus", function(req, res, next) {
           };
           res.send({
             msg: "user as no open cart",
-            user: req.body.body,
+            user: req.body.userId,
             details: details
           });
         });
@@ -151,7 +189,7 @@ router.post("/getshopstatus", function(req, res, next) {
           console.log("details :", details);
           res.send({
             msg: "user as open cart",
-            user: req.body.body,
+            user: req.body.userId,
             details: details
           });
         });

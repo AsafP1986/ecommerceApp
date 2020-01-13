@@ -53,88 +53,101 @@ class shopController {
       });
   }
   static async addProduct(req, res) {
-    try {
-      await upload(req, res, function(err) {
-        console.log("req.body.image :", req.body.image);
-        console.log("req.body.product", req.body.product);
-        if (err instanceof multer.MulterError) {
-          console.log("inside first error :", err);
-          return res.status(500).json(err);
-          console.log("upload error");
-        } else if (err) {
-          console.log("inside second error :", err);
-          return res.status(500).json(err);
-          console.log("upload error");
-        }
-        let t = JSON.parse(req.body.product);
-        console.log("t :", t);
-        const { name, category, price } = t;
-
-        const picture = `uploads/${req.files[0].filename}`;
-        console.log("name :", name);
-        console.log("category :", category);
-        console.log("price :", price);
-        console.log("picture :", picture);
-
-        console.log("req.files :", req.files);
-
-        var p = new ProductModel({
-          name: name,
-          category: category,
-          price: price,
-          picture: picture
-        });
-        p.save((err, data) => {
-          if (err) return console.error(err);
-          res.json(data);
-        });
+    if (req.payload.role != 1) {
+      res.status(401).json({
+        message: "UnauthorizedError: private profile"
       });
-    } catch (error) {
-      console.log("error:", error);
+    } else {
+      try {
+        await upload(req, res, function(err) {
+          console.log("req.body.image :", req.body.image);
+          console.log("req.body.product", req.body.product);
+          if (err instanceof multer.MulterError) {
+            console.log("inside first error :", err);
+            return res.status(500).json(err);
+            console.log("upload error");
+          } else if (err) {
+            console.log("inside second error :", err);
+            return res.status(500).json(err);
+            console.log("upload error");
+          }
+          let t = JSON.parse(req.body.product);
+          console.log("t :", t);
+          const { name, category, price } = t;
+
+          const picture = `uploads/${req.files[0].filename}`;
+          console.log("name :", name);
+          console.log("category :", category);
+          console.log("price :", price);
+          console.log("picture :", picture);
+
+          console.log("req.files :", req.files);
+
+          var p = new ProductModel({
+            name: name,
+            category: category,
+            price: price,
+            picture: picture
+          });
+          p.save((err, data) => {
+            if (err) return console.error(err);
+            res.json(data);
+          });
+        });
+      } catch (error) {
+        console.log("error:", error);
+      }
     }
   }
 
   static async editProduct(req, res) {
-    try {
-      await upload(req, res, function(err) {
-        console.log("req.body from edit product:", req.body);
-        if (err instanceof multer.MulterError) {
-          return res.status(500).json(err);
-          console.log("upload error");
-        } else if (err) {
-          return res.status(500).json(err);
-          console.log("upload error");
-        }
-        let req_files = req.files;
-        let t = JSON.parse(req.body.product);
-        if (req_files.length == 0) {
-          var { id, name, category, price, picture } = t;
-        } else {
-          var { id, name, category, price } = t;
-          var picture = `uploads/${req.files[0].filename}`;
-        }
-
-        console.log("t :", t);
-        console.log("name :", name);
-
-        var query = { _id: id };
-        let product = {
-          name: name,
-          category: category,
-          price: price,
-          picture: picture
-        };
-
-        ProductModel.update(query, product, { upsert: true }, function(
-          err,
-          doc
-        ) {
-          if (err) return res.send(500, { error: err });
-          return res.json({ msg: "Succesfully saved." });
-        });
+    console.log("req.payload.role from edit :", req.payload.role);
+    if (req.payload.role !== 1) {
+      res.status(401).json({
+        message: "UnauthorizedError: private profile"
       });
-    } catch (error) {
-      console.log("error:", error);
+    } else {
+      try {
+        await upload(req, res, function(err) {
+          console.log("req.body from edit product:", req.body);
+          if (err instanceof multer.MulterError) {
+            return res.status(500).json(err);
+            console.log("upload error");
+          } else if (err) {
+            return res.status(500).json(err);
+            console.log("upload error");
+          }
+          let req_files = req.files;
+          let t = JSON.parse(req.body.product);
+          if (req_files.length == 0) {
+            var { id, name, category, price, picture } = t;
+          } else {
+            var { id, name, category, price } = t;
+            var picture = `uploads/${req.files[0].filename}`;
+          }
+
+          console.log("t :", t);
+          console.log("name :", name);
+
+          var query = { _id: id };
+          let product = {
+            name: name,
+            category: category,
+            price: price,
+            picture: picture
+          };
+
+          ProductModel.update(query, product, { upsert: true }, function(
+            err,
+            doc
+          ) {
+            if (err) return res.send(500, { error: err });
+            return res.json({ msg: "Succesfully saved." });
+          });
+        });
+      } catch (error) {
+        console.log("error:", error);
+      }
     }
   }
 
@@ -168,15 +181,17 @@ class shopController {
   static getCart(req, res) {
     var cartItems = [];
     var cart;
-    console.log("get cart for user :", req.body.body);
-    CartModel.find({ user: req.body.body })
+    let user = req.body.user;
+    console.log("get cart for user :", user);
+
+    CartModel.find({ user: user })
       .populate("user")
       .exec(function(err, data) {
         if (err) throw err;
         console.log("data :", data);
         if (data.length == 0) {
           var cart = new CartModel({
-            user: req.body.body,
+            user: user,
             open: true
           });
           cart.save((err, data) => {
@@ -184,7 +199,7 @@ class shopController {
             console.log("data from cart after save :", data);
             res.send({
               msg: "got new cart",
-              cart: data,
+              cart: [data],
               cart_items: cartItems
             });
           });
@@ -197,7 +212,7 @@ class shopController {
           console.log("opencart :", opencart);
           if (opencart.length == 0) {
             var cart = new CartModel({
-              user: req.body.body,
+              user: user,
               open: true
             });
             cart.save((err, data) => {
@@ -230,19 +245,12 @@ class shopController {
           }
         }
       });
-
-    //   res.send({
-    //     msg: "got more than one cart",
-    //     cart: data,
-    //     cart_items: cartItems
-    //   });
-    // } else {
   }
 
   static refreshCart(req, res) {
-    var cartId = req.body.body;
+    var cartId = req.body.cart;
     var cart;
-    console.log("get cart id :", req.body.body);
+    console.log("get cart id :", req.body.cart);
     CartModel.findOne({ _id: cartId })
       .populate("user")
       .exec(function(err, data) {
@@ -261,7 +269,7 @@ class shopController {
   }
 
   static emptyCart(req, res) {
-    var cartId = req.body.body;
+    var cartId = req.body.cartId;
     CartItemModel.deleteMany({ cart: cartId }, (err, data) => {
       console.log("data from empty cart:", data);
       res.send({ msg: "cart emptyed " });
@@ -286,13 +294,14 @@ class shopController {
   static newCartItem(req, res) {
     console.log("req.body from newcartitem :", req.body);
     var p = new CartItemModel({
-      cart: req.body.body.cart,
-      product: req.body.body.product,
-      quantity: req.body.body.quantity,
-      price: req.body.body.price
+      cart: req.body.cart,
+      product: req.body.product,
+      quantity: req.body.quantity,
+      price: req.body.price
     });
     p.save((err, data) => {
       if (err) return console.error(err);
+      console.log("data", data);
       res.json(data);
     });
   }
@@ -311,51 +320,53 @@ class shopController {
   /****   Orders    ****/
 
   static unavaliableShippingDates(req, res) {
-    var shippingDates;
-    var query = OrderModel.find({}, "shippingDetails.s_date", function(
-      err,
-      docs
-    ) {
-      console.log("shipping dates :", docs);
-      shippingDates = docs.map(doc => {
-        return doc.shippingDetails.s_date;
-      });
-      // docs.forEach(element => {
-
-      //   docs.forEach(element2 => {
-      //     if(element._id != element2._id){
-
-      //     }
-      //   });
-
-      // });
-      console.log("shippingDates after map:", shippingDates);
-    }).then(result => {
-      console.log("res :", result);
-      console.log("query :", query);
-      res.send(shippingDates);
-    });
+    let aggregation = OrderModel.aggregate(
+      [{ $group: { _id: "$shippingDetails.s_date", myResult: { $sum: 1 } } }],
+      (err, result) => {
+        console.log("result of aggre", result);
+        let unAvShippingDates = result.filter(date => {
+          if (date.myResult >= 3) {
+            return date._id;
+          }
+        });
+        let dates = unAvShippingDates.map(each => {
+          return each._id;
+        });
+        console.log("unAvShippingDates", dates);
+        let fixedDates = dates.map(date => {
+          console.log("typeof date", date.getMonth());
+          let fixedDate = {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate()
+          };
+          return fixedDate;
+        });
+        console.log("fixedDates", fixedDates);
+        res.send(fixedDates);
+      }
+    );
   }
 
   static newOrder(req, res) {
-    console.log("req.body.body :", req.body.body);
-    let shipDStr = `${req.body.body.shippingDetails.s_date.year}-${req.body.body.shippingDetails.s_date.month}-${req.body.body.shippingDetails.s_date.day}`;
+    console.log("req.body :", req.body);
+    let shipDStr = `${req.body.shippingDetails.s_date.year}-${req.body.shippingDetails.s_date.month}-${req.body.shippingDetails.s_date.day}`;
     console.log("shipDStr :", typeof shipDStr);
     var o = new OrderModel({
-      cart: req.body.body.cart,
-      bill: req.body.body.bill,
+      cart: req.body.cart,
+      bill: req.body.bill,
       shippingDetails: {
-        s_city: req.body.body.shippingDetails.s_city,
-        s_street: req.body.body.shippingDetails.s_street,
+        s_city: req.body.shippingDetails.s_city,
+        s_street: req.body.shippingDetails.s_street,
         s_date: shipDStr
       },
-      payedWith: req.body.body.payedWith
+      payedWith: req.body.payedWith
     });
     o.save((err, data) => {
       if (err) return console.error(err);
       let orderAfterSave = data;
       CartModel.findByIdAndUpdate(
-        req.body.body.cart,
+        req.body.cart,
         { open: false },
         (err, data) => {
           if (err) return console.error(err);
@@ -367,7 +378,6 @@ class shopController {
         order: orderAfterSave
       });
     });
-    // res.send({ msg: "new order" });
   }
 }
 module.exports = shopController;

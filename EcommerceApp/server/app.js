@@ -3,9 +3,12 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var passport = require("passport");
 var cors = require("cors");
 var db = require("./services/mongo");
 var session = require("express-session");
+
+require("./middleware/passport");
 
 var shopRouter = require("./routes/shopRoutes");
 var usersRouter = require("./routes/usersRoutes");
@@ -29,6 +32,8 @@ app.use(
 );
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors({ credentials: true, origin: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", shopRouter);
 app.use("/users", usersRouter);
@@ -44,9 +49,14 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
+  if (err.name === "UnauthorizedError") {
+    res.status(401);
+    console.log("err", err);
+    // res.json({ message: err.name + ": " + err.message });
+  }
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  console.log("err", err);
 });
 
 module.exports = app;
