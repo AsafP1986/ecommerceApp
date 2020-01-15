@@ -62,18 +62,6 @@ router.post("/add", function(req, res, next) {
   );
 });
 
-// router.get("/getuser", function(req, res, next) {
-//   let user = req.session.user;
-//   console.log("req.session.user :", req.session.user);
-
-//   if (user === undefined) {
-//     res.send({ msg: "no user" });
-//     console.log("no user");
-//   } else {
-//     res.json({ user });
-//   }
-// });
-
 router.post("/login", function(req, res, next) {
   passport.authenticate("local", function(err, user, info) {
     var token;
@@ -98,35 +86,7 @@ router.post("/login", function(req, res, next) {
   })(req, res, next);
 });
 
-// console.log("req.body :", req.body.body.username);
-// UsersModel.findOne({ user_name: req.body.body.username }, (err, user) => {
-//   if (err) {
-//     console.error(err);
-//   }
-//   console.log("user :", user);
-//   if (user === null) {
-//     res.json({ msg: "user name not registered" });
-//   } else {
-//     if (user.password == req.body.body.password) {
-//       let session = req.session;
-//       session.user = user;
-//       console.log("session :", session);
-//       res.json({ msg: "good credantials", user: user });
-//       console.log("session username:", session.user.user_name);
-//     } else {
-//       res.json({ msg: "wrong password" });
-//     }
-//   }
-// });
-// );
-
 router.get("/logout", function(req, res, next) {
-  console.log("req.session", req.session);
-
-  req.session.destroy();
-  console.log("session destroyed");
-
-  console.log("req.session", req.session);
   res.send({ msg: "user logged out" });
 });
 
