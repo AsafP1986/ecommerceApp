@@ -1,0 +1,150 @@
+<div class="card" style="width: 100%; height: 100%;">
+  <div *ngIf="islogedin" class="card-header">
+    <div [ngSwitch]="status">
+      <div *ngSwitchCase="'admin'">
+        <button
+          class="btn btn-success btn-block"
+          routerLink="/shop"
+          type="button"
+        >
+          welcom {{ currentUserName }}, go to shop
+        </button>
+        <button
+          class="btn btn-outline-success btn-block"
+          type="button"
+          (click)="logout()"
+        >
+          log out
+        </button>
+        <p class="loginstatus">
+          you can start admin the shop
+        </p>
+      </div>
+      <div *ngSwitchCase="'a'">
+        <button
+          class="btn btn-success btn-block"
+          routerLink="/shop"
+          type="button"
+        >
+          continue shoping {{ currentUserName }}
+        </button>
+        <button
+          class="btn btn-outline-success btn-block"
+          type="button"
+          (click)="logout()"
+        >
+          log out
+        </button>
+        <p class="loginstatus">
+          you have an open cart from {{ userStatusDate }}, it's sub-total stands
+          on: {{ userStatus.details.price | currency: "ILS":"symbol":".2-2" }}
+        </p>
+      </div>
+      <div *ngSwitchCase="'b'">
+        <button
+          class="btn btn-success btn-block"
+          routerLink="/shop"
+          type="button"
+        >
+          start shoping {{ currentUserName }}
+        </button>
+        <button
+          class="btn btn-outline-success btn-block"
+          type="button"
+          (click)="logout()"
+        >
+          log out
+        </button>
+        <p class="loginstatus">
+          you're last order was on {{ userStatusDate }}, at the price of :
+          {{ userStatus.details.price | currency: "ILS":"symbol":".2-2" }}
+        </p>
+      </div>
+      <div *ngSwitchCase="'c'">
+        <button
+          class="btn btn-success btn-block"
+          routerLink="/shop"
+          type="button"
+        >
+          start shoping {{ currentUserName }}
+        </button>
+        <button
+          class="btn btn-outline-success btn-block"
+          type="button"
+          (click)="logout()"
+        >
+          log out
+        </button>
+        <p class="loginstatus">
+          Welcome to Agriphy. enjoy your first visit
+        </p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!islogedin" class="card-body">
+    <h5 class="card-title">login to shop</h5>
+    <form
+      *ngIf="!islogedin"
+      #loginform="ngForm"
+      (ngSubmit)="loginform.form.valid && login(loginform)"
+    >
+      <div class="form-group">
+        <label for="username">User Name: </label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          #username="ngModel"
+          ngModel
+          required
+        />
+        <small
+          *ngIf="username.touched && username.invalid"
+          class="form-text text-muted"
+          ><p id="error">user name is required</p></small
+        >
+        <small *ngIf="errormsg == 'User not found'" class="form-text text-muted"
+          ><p id="error">user name not registered</p></small
+        >
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          #password="ngModel"
+          ngModel
+          required
+        />
+        <small
+          *ngIf="password.touched && password.invalid"
+          class="form-text text-muted"
+          ><p id="error">password is required</p></small
+        >
+        <small
+          *ngIf="errormsg == 'Password is wrong'"
+          class="form-text text-muted"
+          ><p id="error">wrong password</p></small
+        >
+      </div>
+      <button type="submit" class="btn btn-outline-success btn-block">
+        login
+      </button>
+    </form>
+    <div class="text-center">
+      <h5>
+        Not registered yet? <br />
+        <button
+          class="btn btn-outline-success mb-2 mr-2"
+          style="margin-top: 10px;"
+          (click)="open()"
+        >
+          please sign up
+        </button>
+      </h5>
+    </div>
+  </div>
+</div>

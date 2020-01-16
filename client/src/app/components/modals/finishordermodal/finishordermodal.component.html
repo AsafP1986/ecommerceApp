@@ -1,0 +1,14 @@
+<div class="modal-body">
+  <h2 class="text-center">Your order was successfully placed</h2>
+  <button type="button" class="btn btn-outline-success btn-sm btn-block">
+    <a [href]="fileUrl" download="myReceipt.txt">Download receipt</a>
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-outline-success btn-sm btn-block"
+    (click)="close()"
+  >
+    Back to Shop
+  </button>
+</div>

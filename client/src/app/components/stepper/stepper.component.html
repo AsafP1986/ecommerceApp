@@ -1,0 +1,114 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>User's details:</ng-template>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="User name"
+          formControlName="usernameCtrl"
+        />
+        <mat-error>
+          <div *ngIf="username.hasError('required')">user name is required</div>
+          <div *ngIf="username.hasError('userExist')">
+            user name already exist
+          </div>
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input matInput placeholder="e-mail" formControlName="emailCtrl" />
+        <mat-error>Please enter a valid E-mail</mat-error>
+      </mat-form-field>
+      <br />
+      <div [formGroup]="passwordgroup">
+        <mat-form-field>
+          <input
+            type="password"
+            matInput
+            placeholder="password"
+            formControlName="passwordCtrl"
+          />
+          <mat-error *ngIf="password.hasError('required')"
+            >Please enter a valid password</mat-error
+          >
+          <mat-error *ngIf="password.hasError('minlength')"
+            >Password must be at least 3 charecters
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            type="password"
+            placeholder="verify password"
+            formControlName="vpasswordCtrl"
+          />
+        </mat-form-field>
+        <mat-error
+          class="groupError"
+          *ngIf="passwordgroup.hasError('mismatch')"
+        >
+          <!-- needs more tunning for showing up better -->
+          passwords don't match</mat-error
+        >
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <mat-select
+          [(value)]="selected"
+          placeholder="City"
+          formControlName="cityCtrl"
+        >
+          <mat-option *ngFor="let city of cities" [value]="city">{{
+            city
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Street"
+          formControlName="streetCtrl"
+          required
+        />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="First name"
+          formControlName="firstnameCtrl"
+          required
+        />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="last name"
+          formControlName="lastnameCtrl"
+          required
+        />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button
+          *ngIf="!secondFormGroup.invalid"
+          mat-button
+          (click)="onSubmit()"
+        >
+          Submit
+        </button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

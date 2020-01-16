@@ -1,0 +1,39 @@
+<div class="modal-body">
+  <form #form="ngForm" (ngSubmit)="updateCart(form)">
+    <div class="form-group">
+      <label for="quantity">how many?</label>
+      <div class="input-group">
+        <div class="input-group-btn">
+          <button class="btn btn-success" (click)="plus($event)">
+            +
+          </button>
+        </div>
+        <input
+          type="number"
+          min="1"
+          class="form-control"
+          id="quantity"
+          name="quantity"
+          [(ngModel)]="quantity"
+          ngModel
+          required="true"
+        />
+        <div class="input-group-btn">
+          <button class="btn btn-success" (click)="minus($event)">
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success btn-sm btn-block">
+      add
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-success btn-sm btn-block"
+      (click)="activeModal.close('Close click')"
+    >
+      cancel
+    </button>
+  </form>
+</div>

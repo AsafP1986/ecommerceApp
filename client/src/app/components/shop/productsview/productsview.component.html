@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <form class="form-inline mr-auto my-2">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search by product name..."
+        aria-label="Search"
+        (keyup)="search($event)"
+      />
+    </form>
+    <div class="dropdown form-inline ml-auto my-2 py-2">
+      <button
+        class="btn btn-outline-success  dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Select by category
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" id="all" (click)="show($event)">
+          show all
+        </button>
+        <button
+          *ngFor="let category of categories"
+          class="dropdown-item"
+          id="{{ category.name }}"
+          (click)="show($event)"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <p *ngIf="products.length == 0">no products in the shop</p>
+    <div
+      *ngFor="let product of productsDisplay"
+      class="card"
+      style="width: 13rem; height: 25rem; border: 5px solid green"
+    >
+      <img
+        src="{{ imageApiURL }}{{ product.picture }}"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">
+          price: {{ product.price | currency: "ILS":"symbol":".2-2" }}
+        </p>
+        <p class="card-text">category: {{ product.category.name }}</p>
+        <button
+          class="btn btn-block btn-outline-success"
+          id="{{ product._id }},{{ product.price }}"
+          (click)="addToCart($event)"
+        >
+          Add to cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

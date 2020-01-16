@@ -1,0 +1,30 @@
+<div>
+  <div class="form-row">
+    <div class="col-2">
+      <img
+        src="http://localhost:3000/{{ item.product.picture }}"
+        alt="{{ item.product.name }}"
+        class="img-responsive cartimg"
+      />
+    </div>
+    <div class="col-3 py-2 ml-1">
+      <span>{{ item.product.name }}</span>
+    </div>
+    <div class="col-1 py-2">
+      <span>{{ item.quantity }}</span>
+    </div>
+    <div class="col-3 py-2">
+      <span> {{ item.price | currency: "ILS":"symbol":".2-2" }}</span>
+    </div>
+    <div class="col-2 py-2">
+      <button
+        class="btn btn-outline-success rounded-circle btn-sm"
+        type="button"
+        id="{{ item._id }}"
+        (click)="remove($event)"
+      >
+        <mat-icon data-id="{{ item._id }}">remove</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

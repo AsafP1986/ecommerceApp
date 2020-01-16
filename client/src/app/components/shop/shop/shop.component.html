@@ -1,0 +1,21 @@
+<navbar
+  [current_user]="current_user"
+  [opened]="opened"
+  (togglesidebar)="onsidebartoggle($event)"
+></navbar>
+
+<div *ngIf="userRole == 1"><admin></admin></div>
+<div *ngIf="userRole == 0">
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" [(opened)]="opened">
+      <cart
+        [current_user]="current_user"
+        [newCartItem]="newCartItem"
+        (closesidebar)="onsidebarclose($event)"
+      ></cart>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <productsview (CartItemAdded)="onCartItemAdded($event)"></productsview>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

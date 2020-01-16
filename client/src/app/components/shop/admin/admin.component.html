@@ -1,0 +1,169 @@
+<div class="container-fluid">
+  <div class="row">
+    <form class="form-inline mr-auto my-2">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search by product name..."
+        aria-label="Search"
+        (keyup)="search($event)"
+      />
+    </form>
+    <div class="dropdown  form-inline ml-auto my-2 py-2">
+      <button
+        class="btn btn-outline-success  dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Select by category
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" id="all" (click)="show($event)">
+          show all
+        </button>
+        <button
+          *ngFor="let category of categories"
+          class="dropdown-item"
+          id="{{ category.name }}"
+          (click)="show($event)"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-outline-success btn-block" (click)="open()">
+    Add product
+  </button>
+  <div class="row">
+    <mat-sidenav-container>
+      <mat-sidenav mode="side" [(opened)]="editshow"
+        ><div
+          class="card"
+          style="width: 80%; height: 80%; border: 5px solid green ; padding: 8px;"
+        >
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="close()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <img
+            src="{{ imageApiURL }}{{ productToEditpicture }}"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title text-center">Edit product</h5>
+            <form #form="ngForm" (ngSubmit)="editproduct(form)">
+              <div class="form-group">
+                <label for="name">Product's Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="{{ productToEditName }}"
+                  [(ngModel)]="productToEditName"
+                  id="name"
+                  name="name"
+                  ngModel
+                  required="true"
+                />
+              </div>
+              <div class="form-group">
+                <label for="price">Product's price:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  name="price"
+                  value="{{ productToEditPrice }}"
+                  placeholder="{{ productToEditPrice }}"
+                  [(ngModel)]="productToEditPrice"
+                  ngModel
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="category"
+                  >Product's category: &nbsp;&nbsp;&nbsp;{{
+                    productToEditCategoryName
+                  }}</label
+                >
+                <select
+                  class="form-control"
+                  id="category"
+                  name="category"
+                  [(ngModel)]="productToEditCategoryId"
+                  ngModel
+                  required
+                >
+                  <option
+                    *ngFor="let category of categories"
+                    value="{{ category._id }}"
+                    >{{ category.name }}</option
+                  >
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="picture">Product's picture:</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="picture"
+                  name="picture"
+                  accept="image/*"
+                  ngModel
+                  (change)="onFileChanged($event)"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-outline-success btn-lg btn-block"
+              >
+                save changes
+              </button>
+            </form>
+          </div>
+        </div></mat-sidenav
+      >
+
+      <mat-sidenav-content>
+        <div class="container-fluid">
+          <div class="row">
+            <p *ngIf="productsDisplay.length == 0">no products in the shop</p>
+            <div
+              *ngFor="let product of productsDisplay"
+              class="card"
+              style="width: 13rem; height: 25rem; border: 5px solid green ; float: left;"
+            >
+              <img
+                src="{{ imageApiURL }}{{ product.picture }}"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">
+                  price: {{ product.price | currency: "ILS":"symbol":".2-2" }}
+                </p>
+                <p class="card-text">category: {{ product.category.name }}</p>
+                <button
+                  class="btn btn-block btn-outline-success"
+                  id="{{ product._id }}"
+                  (click)="edit($event)"
+                >
+                  edit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="container-fluid text-right">
+  <button
+    class="btn btn-success "
+    style="float: left;"
+    type="button"
+    routerLink="/shop"
+  >
+    Back to shop
+  </button>
+  <div class="btn-group">
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      routerLink="/"
+      routerLinkActive="active"
+    >
+      hello {{ current_user.user_name }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" disabled>My orders</a>
+      <a class="dropdown-item" disabled>My profile</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" (click)="logout()">Logout</a>
+    </div>
+  </div>
+</div>
+
+<!-- <nav class="navbar navbar-expand-sm navbar-light">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar"
+      aria-controls="navbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link">Agriphy</a>
+        </li>
+        <li class="nav-item "></li>
+      </ul>
+    </div>
+  </nav> -->

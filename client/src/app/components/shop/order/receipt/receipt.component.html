@@ -1,0 +1,18 @@
+<div style="width: 300px; ">
+  <div class="form-row">
+    <form class="form-inline mr-auto my-2">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        placeholder="Search by product name..."
+        aria-label="Search"
+        (keyup)="search($event)"
+      />
+    </form>
+  </div>
+  <div *ngIf="order_items_display.length == 0" class="card-text text-center">
+    no such item in the cart
+  </div>
+  <orderitem *ngFor="let item of order_items_display" [item]="item"></orderitem>
+  <p class="text-center">{{ total_bill | currency: "ILS":"symbol":".2-2" }}</p>
+</div>

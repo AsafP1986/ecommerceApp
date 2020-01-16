@@ -1,0 +1,160 @@
+<form [formGroup]="orderFormGroup">
+  <div class="form-group">
+    <label for="Shippingform">Shipping details:</label>
+    <div class="form-group" id="Shippingform">
+      <div class="form-group">
+        <label for="city">City:</label>
+        <select
+          id="city"
+          name="city"
+          #citytag
+          class="form-control"
+          formControlName="cityCtrl"
+          (dblclick)="doubleClick()"
+        >
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+        </select>
+        <small
+          *ngIf="
+            (city.dirty || city.touched) &&
+            city.invalid &&
+            city.hasError('required')
+          "
+          style="color: red;"
+          >please select a city</small
+        >
+      </div>
+      <div class="form-group">
+        <label for="street">Street:</label>
+        <input
+          id="street"
+          #streettag
+          class="form-control"
+          type="text"
+          formControlName="streetCtrl"
+          name="street"
+          (dblclick)="doubleClick()"
+        />
+
+        <small
+          *ngIf="
+            (street.dirty || street.touched) &&
+            street.invalid &&
+            street.hasError('required')
+          "
+          style="color: red;"
+          >please input a street name</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <div class="input-group form-inline">
+          <input
+            class="form-control"
+            placeholder="pick a delivery date"
+            name="date"
+            formControlName="dateCtrl"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            [footerTemplate]="footerTemplate"
+            [autoClose]="inside"
+            [markDisabled]="isDisabled"
+            [minDate]="min_date"
+            (dateSelect)="onDateSelect($event)"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <mat-icon>calendar_today</mat-icon>
+            </button>
+            <small
+              *ngIf="
+                (date.dirty || date.touched) &&
+                date.invalid &&
+                date.hasError('required')
+              "
+              style="color: red;"
+              >please pick a date</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="payment">Payment:</label>
+    <div class="form-group" id="payment">
+      <label for="creditCard">Credit card:</label>
+      <input
+        id="creditCard"
+        class="form-control"
+        type="tel"
+        #creditCardtag
+        formControlName="creditCardCtrl"
+        (keyup)="creditinsert($event)"
+      />
+      <!-- [value]="creditCard.value |" -->
+      <small
+        *ngIf="
+          (creditCard.dirty || creditCard.touched) &&
+          creditCard.invalid &&
+          creditCard.hasError('required')
+        "
+        style="color: red;"
+        >please enter a valid number</small
+      ><br />
+      <small
+        *ngIf="
+          (creditCard.dirty || creditCard.touched) &&
+          creditCard.invalid &&
+          (creditCard.hasError('minlength') || creditCard.hasError('maxlength'))
+        "
+        style="color: red;"
+        >credit card number must be of 16 digits</small
+      ><br />
+      <small
+        *ngIf="
+          (creditCard.dirty || creditCard.touched) &&
+          creditCard.invalid &&
+          creditCard.hasError('pattern')
+        "
+        style="color: red;"
+        >credit card must contain digits only</small
+      ><br />
+    </div>
+  </div>
+  <div></div>
+
+  <button
+    class="btn btn-success btn-block"
+    type="submit"
+    [disabled]="!orderFormGroup.valid"
+    (click)="submit($event)"
+  >
+    Order Up!
+  </button>
+</form>
+
+<ng-template #footerTemplate>
+  <hr class="my-0" />
+  <button
+    class="btn btn-primary btn-sm m-2 float-left"
+    (click)="selectToday(); d.close()"
+  >
+    Today
+  </button>
+  <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">
+    Close
+  </button>
+</ng-template>
+<!-- 
+return (
+        maskedSection.replace(/(\d{4})/g, match => {
+          console.log("match", match);
+          return match;
+        }) + visibleSection
+      ); -->

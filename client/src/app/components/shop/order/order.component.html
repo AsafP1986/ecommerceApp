@@ -1,0 +1,14 @@
+<ordernavbar [current_user]="current_user"></ordernavbar>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <receipt
+        [total_bill]="total_bill"
+        [order_items]="current_cart_items"
+      ></receipt>
+    </div>
+    <div class="col">
+      <orderform [order_items]="current_cart_items"></orderform>
+    </div>
+  </div>
+</div>

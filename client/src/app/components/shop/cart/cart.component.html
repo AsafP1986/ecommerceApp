@@ -1,0 +1,41 @@
+<div style="width: 300px; ">
+  <div class="form-row">
+    <div class="col-4 ml-1">
+      <button
+        class="btn btn-success"
+        *ngIf="cart_items.length"
+        (click)="order()"
+        type="button"
+      >
+        Order
+      </button>
+    </div>
+    <div class="col-8  my-2">
+      <span>{{ total_bill | currency: "ILS":"symbol":".2-2" }}</span>
+    </div>
+  </div>
+  <div *ngIf="cart_items.length == 0" class="card-text text-center">
+    no items in the cart
+  </div>
+  <cartitem
+    *ngFor="let item of cart_items"
+    (item_price)="calcTBill($event)"
+    (remove_item)="removeItem($event)"
+    [item]="item"
+  ></cartitem>
+  <button
+    *ngIf="cart_items.length"
+    class="btn btn-outline-success"
+    type="button"
+    (click)="emptyCart()"
+  >
+    Empty cart
+  </button>
+  <button
+    class="btn btn-outline-success"
+    type="button"
+    (click)="sidebarclose($event)"
+  >
+    Close cart
+  </button>
+</div>
