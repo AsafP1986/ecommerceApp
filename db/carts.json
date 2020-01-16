@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5e0e2aea7bc1719537dc0bbc"},"user":{"$oid":"5e0883b50ae3e45c8f490cab"},"open":false,"createdAt":{"$date":{"$numberLong":"1577986794137"}},"updatedAt":{"$date":{"$numberLong":"1578212001071"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5e119aab7bc1719537dc0bc0"},"user":{"$oid":"5e0883b50ae3e45c8f490cab"},"open":false,"createdAt":{"$date":{"$numberLong":"1578212011242"}},"updatedAt":{"$date":{"$numberLong":"1578212569743"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5e119cdd7bc1719537dc0bc3"},"user":{"$oid":"5e0883b50ae3e45c8f490cab"},"open":false,"createdAt":{"$date":{"$numberLong":"1578212573996"}},"updatedAt":{"$date":{"$numberLong":"1578487605646"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5e15cf382361a5b22a0c197c"},"user":{"$oid":"5e0883b50ae3e45c8f490cab"},"open":true,"createdAt":{"$date":{"$numberLong":"1578487608537"}},"updatedAt":{"$date":{"$numberLong":"1578487608537"}},"__v":{"$numberInt":"0"}}
