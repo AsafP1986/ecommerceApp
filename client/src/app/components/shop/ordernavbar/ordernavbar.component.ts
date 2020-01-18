@@ -9,10 +9,14 @@ import { Router } from "@angular/router";
 })
 export class OrdernavbarComponent implements OnInit {
   @Input() current_user;
+  user: any;
 
   constructor(private _userapi: UsersapiService, private _router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.user = this.current_user ? this.current_user.user_name : "";
+    console.log("this.user", this.user);
+  }
 
   logout() {
     console.log("loggingout");

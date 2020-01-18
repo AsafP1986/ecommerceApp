@@ -102,6 +102,7 @@ export class LoginFormComponent implements OnInit {
         payload = this.data.token.split(".")[1];
         payload = window.atob(payload);
         let user = JSON.parse(payload);
+        console.log("user token after login:", user);
         this.user = user;
         if (this.user.role === 1) {
           this.status = "admin";

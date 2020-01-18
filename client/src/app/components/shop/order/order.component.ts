@@ -13,7 +13,7 @@ export class OrderComponent implements OnInit {
   constructor(
     private _shopservice: ShopapiService,
     private _Usersservice: UsersapiService,
-    private _router: Router
+    private router: Router
   ) {}
 
   current_order: any;
@@ -24,8 +24,10 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.current_order = this._shopservice.getcurrent_order();
-    if (this.current_order == undefined) {
-      this._router.navigateByUrl("login");
+    console.log("this.cu", this.current_order);
+    if (!this.current_order) {
+      console.log("inside", this.current_order);
+      this.router.navigateByUrl("/login");
     } else {
       console.log("this.current_order :", this.current_order);
       this.current_user = this.current_order.user;

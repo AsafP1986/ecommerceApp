@@ -101,7 +101,7 @@ class shopController {
   }
 
   static async editProduct(req, res) {
-    console.log("req.payload.role from edit :", req.payload.role);
+    console.log("req.payload.role from edit :", req.payload);
     if (req.payload.role !== 1) {
       res.status(401).json({
         message: "UnauthorizedError: private profile"

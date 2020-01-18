@@ -21,6 +21,10 @@ export class ShopapiService {
     if (!this.token) {
       this.token = localStorage.getItem("token");
     }
+    let payload = this.token.split(".")[1];
+    payload = window.atob(payload);
+    let user = JSON.parse(payload);
+    console.log("token from gettoken in shopapi :", user);
     return JSON.parse(this.token);
   }
   setcurrentcart(cart) {
@@ -36,7 +40,7 @@ export class ShopapiService {
   }
 
   getcurrent_order() {
-    console.log("order was sent :", this.current_order);
+    console.log("order in shopApi :", this.current_order);
     return this.current_order;
   }
 

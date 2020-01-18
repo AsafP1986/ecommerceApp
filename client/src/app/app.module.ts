@@ -44,7 +44,7 @@ import { ReceiptComponent } from "./components/shop/order/receipt/receipt.compon
 import { OrderformComponent } from "./components/shop/order/orderform/orderform.component";
 import { OrderitemComponent } from "./components/shop/order/receipt/orderitem/orderitem.component";
 import { FinishordermodalComponent } from "./components/modals/finishordermodal/finishordermodal.component";
-import { CreditcardpipePipe } from "./components/shop/order/creditcardpipe.pipe";
+import { CreditcarddirectiveDirective } from "./components/shop/order/creditcarddirective.directive";
 
 @NgModule({
   declarations: [
@@ -71,7 +71,7 @@ import { CreditcardpipePipe } from "./components/shop/order/creditcardpipe.pipe"
     OrderformComponent,
     OrderitemComponent,
     FinishordermodalComponent,
-    CreditcardpipePipe
+    CreditcarddirectiveDirective
   ],
   imports: [
     BrowserModule,
@@ -92,7 +92,7 @@ import { CreditcardpipePipe } from "./components/shop/order/creditcardpipe.pipe"
     HttpClientModule,
     CreditCardDirectivesModule
   ],
-  providers: [NgbModule, ShopapiService, UsersapiService, CreditcardpipePipe],
+  providers: [NgbModule, ShopapiService, UsersapiService],
   entryComponents: [
     NgbdModal,
     AddproductmodalComponent,

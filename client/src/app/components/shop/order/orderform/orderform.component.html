@@ -92,12 +92,15 @@
       <input
         id="creditCard"
         class="form-control"
-        type="tel"
         #creditCardtag
+        appCreditcarddirective
+        [cardNumbers]="creditCard.value"
         formControlName="creditCardCtrl"
-        (keyup)="creditinsert($event)"
+        (valueChanged)="creditinsert($event)"
       />
-      <!-- [value]="creditCard.value |" -->
+      <!-- 
+        type="tel"
+        [value]="creditCard.value |" -->
       <small
         *ngIf="
           (creditCard.dirty || creditCard.touched) &&

@@ -15,7 +15,6 @@ import { NgbModal, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreditCardValidator } from "angular-cc-library";
 import { ShopapiService } from "../../../../services/shopapi.service";
 import { FinishordermodalComponent } from "../../../modals/finishordermodal/finishordermodal.component";
-import { CreditcardpipePipe } from "../creditcardpipe.pipe";
 
 @Component({
   selector: "orderform",
@@ -49,8 +48,7 @@ export class OrderformComponent implements OnInit {
     private _calendar: NgbCalendar,
     private _shopApi: ShopapiService,
     private _modalService: NgbModal,
-    private _router: Router,
-    private _creditCardPipe: CreditcardpipePipe
+    private _router: Router
   ) {
     this.orderFormGroup = this._formBuilder.group({
       cityCtrl: ["", Validators.required],
@@ -65,16 +63,6 @@ export class OrderformComponent implements OnInit {
           Validators.pattern("[0-9-*]*")
         ]
       ]
-    });
-    this.orderFormGroup.valueChanges.subscribe(val => {
-      console.log("val", val);
-      console.log("typeof val.creditCardCtrl", typeof val.creditCardCtrl);
-      if (typeof val.creditCardCtrl === "string") {
-        const maskedVal = this._creditCardPipe.transform(val.creditCardCtrl);
-        if (val.creditCardCtrl !== maskedVal) {
-          this.orderFormGroup.patchValue({ creditCardCtrl: maskedVal });
-        }
-      }
     });
   }
 
@@ -104,19 +92,10 @@ export class OrderformComponent implements OnInit {
   }
 
   creditinsert(event) {
-    console.log("event from creditinsert:", event.keyCode);
-    if (event.keyCode >= 48 && event.keyCode <= 57) {
-      console.log("number was entered", typeof event.key);
-      this.CrCaStr += event.key;
-    } else if (event.keyCode == 8) {
-      console.log("backspace was entered", event.key);
-      this.CrCaStr = this.CrCaStr.slice(0, -1);
-    } else {
-      console.log("bad key was entered", typeof event.key);
-      this.CrCaStr += event.key;
-    }
+    console.log("event from creditinsert:", event);
+    this.creditCard.patchValue(event);
+    console.log(event, "event");
     console.log("this.creditCard from creditinsert:", this.creditCard);
-    console.log("this.CrCaStr from creditinsert:", this.CrCaStr);
   }
 
   selectToday() {
@@ -159,6 +138,7 @@ export class OrderformComponent implements OnInit {
 
   submit(event) {
     let user = this.current_order.user;
+    let payedWith = `**** **** **** ${this.creditCard.value.slice(-4)}`;
     event.preventDefault();
     console.log("this.orderFormGroup :", this.orderFormGroup);
     let order = {
@@ -169,7 +149,7 @@ export class OrderformComponent implements OnInit {
         s_street: this.street.value,
         s_date: this.date.value
       },
-      payedWith: this.creditCard.value
+      payedWith: payedWith
     };
 
     console.log("order :", order);
