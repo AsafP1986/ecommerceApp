@@ -1,2 +1,1 @@
-# ecommerceApp
- 
+# ecommerceApp MEAN stack app

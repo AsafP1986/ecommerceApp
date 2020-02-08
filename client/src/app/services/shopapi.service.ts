@@ -48,7 +48,7 @@ export class ShopapiService {
 
   getAllProducts() {
     console.log("this.getToken()", this.getToken());
-    return this._http.get("http://localhost:3000/products", {
+    return this._http.get("products", {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -59,11 +59,7 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post(
-      "http://localhost:3000/products/add",
-      product,
-      options
-    );
+    return this._http.post("products/add", product, options);
   }
 
   editproduct(product) {
@@ -73,17 +69,13 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post(
-      "http://localhost:3000/products/edit",
-      product,
-      options
-    );
+    return this._http.post("products/edit", product, options);
   }
 
   //categories
 
   getAllCategories() {
-    return this._http.get("http://localhost:3000/categories", {
+    return this._http.get("categories", {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -98,11 +90,7 @@ export class ShopapiService {
       "Content-Type": "application/json"
     };
 
-    return this._http.post(
-      "http://localhost:3000/cart/get",
-      userToSend,
-      options
-    );
+    return this._http.post("cart/get", userToSend, options);
   }
 
   refreshcart(cart) {
@@ -115,11 +103,7 @@ export class ShopapiService {
       }
     };
 
-    return this._http.post(
-      "http://localhost:3000/cart/refresh",
-      cartToSend,
-      options
-    );
+    return this._http.post("cart/refresh", cartToSend, options);
   }
 
   emptyCart(cartId) {
@@ -130,11 +114,7 @@ export class ShopapiService {
       "Content-Type": "application/json"
     };
 
-    return this._http.post(
-      "http://localhost:3000/cart/empty",
-      cartIdToSend,
-      options
-    );
+    return this._http.post("cart/empty", cartIdToSend, options);
   }
 
   //Cart items
@@ -145,15 +125,11 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post(
-      "http://localhost:3000/cartitem/new",
-      cart_item,
-      options
-    );
+    return this._http.post("cartitem/new", cart_item, options);
   }
 
   getCartItems(cart) {
-    return this._http.get(`http://localhost:3000/cartitems/${cart}`, {
+    return this._http.get(`cartitems/${cart}`, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -166,15 +142,11 @@ export class ShopapiService {
       "Content-Type": "application/json"
     };
 
-    return this._http.post(
-      "http://localhost:3000/cartitem/remove",
-      itemToSend,
-      options
-    );
+    return this._http.post("cartitem/remove", itemToSend, options);
   }
 
   getstatus() {
-    return this._http.get("http://localhost:3000/status", {
+    return this._http.get("status", {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -185,11 +157,11 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post("http://localhost:3000/orders/new", order, options);
+    return this._http.post("orders/new", order, options);
   }
 
   avalShippingDates() {
-    return this._http.get("http://localhost:3000/orders/checkshippingdates", {
+    return this._http.get("orders/checkshippingdates", {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }

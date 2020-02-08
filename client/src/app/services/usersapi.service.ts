@@ -23,7 +23,7 @@ export class UsersapiService {
   }
 
   getUser() {
-    return this._http.get("http://localhost:3000/users/getuser", {
+    return this._http.get("users/getuser", {
       withCredentials: true
     });
   }
@@ -45,13 +45,11 @@ export class UsersapiService {
       "Content-Type": "application/json"
     };
     console.log("username to check  :", userNameToSend);
-    return this._http
-      .post("http://localhost:3000/users/check", userNameToSend, options)
-      .pipe(
-        map(res => {
-          return res;
-        })
-      );
+    return this._http.post("users/check", userNameToSend, options).pipe(
+      map(res => {
+        return res;
+      })
+    );
   }
 
   addUser(user: object) {
@@ -61,11 +59,7 @@ export class UsersapiService {
       "Content-Type": "application/json"
     };
     console.log("user to add  :", user);
-    return this._http.post(
-      "http://localhost:3000/users/add",
-      userToSend,
-      options
-    );
+    return this._http.post("users/add", userToSend, options);
   }
 
   login(user) {
@@ -73,11 +67,11 @@ export class UsersapiService {
     const options = {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
-    return this._http.post("http://localhost:3000/users/login", user, options);
+    return this._http.post("users/login", user, options);
   }
 
   logout() {
-    return this._http.get("http://localhost:3000/users/logout", {
+    return this._http.get("users/logout", {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -89,10 +83,6 @@ export class UsersapiService {
       "Content-Type": "application/json"
     };
     console.log("user to login, :", userId);
-    return this._http.post(
-      "http://localhost:3000/users/getshopstatus",
-      userIdToSend,
-      options
-    );
+    return this._http.post("users/getshopstatus", userIdToSend, options);
   }
 }
