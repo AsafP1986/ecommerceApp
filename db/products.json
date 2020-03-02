@@ -1,10 +1,82 @@
-{"_id":{"$oid":"5de69a2a7ca886ad569b83e8"},"name":"אבטיח","category":{"$oid":"5de63c4e2c8f54a2b4af944d"},"price":{"$numberInt":"44"},"picture":"uploads/watermelon.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de69c1bf5ac03ad82081028"},"name":"תפוז","category":{"$oid":"5de63c4e2c8f54a2b4af944d"},"price":{"$numberInt":"13"},"picture":"uploads/orange.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de69d7df5ac03ad82081029"},"name":"תות","category":{"$oid":"5de63c4e2c8f54a2b4af944d"},"price":{"$numberInt":"13"},"picture":"uploads/strawberries.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de6acb5f5ac03ad8208102a"},"name":"תפוח","category":{"$oid":"5de63c4e2c8f54a2b4af944d"},"price":{"$numberInt":"3"},"picture":"uploads/apple.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de6ad2df5ac03ad8208102b"},"name":"קיווי","category":{"$oid":"5de63c4e2c8f54a2b4af944d"},"price":{"$numberInt":"54"},"picture":"uploads/kiwi.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de6ad7ef5ac03ad8208102c"},"name":"בננה","category":{"$oid":"5de63c4e2c8f54a2b4af944d"},"price":{"$numberInt":"8"},"picture":"uploads/banana.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de6b4ebf5ac03ad8208102d"},"name":"גזר","category":{"$oid":"5de63cef2c8f54a2b4af944e"},"price":{"$numberInt":"7"},"picture":"uploads/carrot.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5deb47910a4027e7be71dc40"},"name":"טימין","category":{"$oid":"5de63d072c8f54a2b4af944f"},"price":{"$numberDouble":"4.5"},"picture":"uploads/thyme.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e0c762e91797d83f4b6a5ae"},"name":"גמבה","category":{"$oid":"5de63cef2c8f54a2b4af944e"},"price":{"$numberInt":"6"},"picture":"uploads/redpepper.jpeg","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5e11ac755f5237a8e920860e"},"name":"נענע","category":{"$oid":"5de63d072c8f54a2b4af944f"},"price":{"$numberDouble":"2.5"},"picture":"uploads/nana.jpeg","__v":{"$numberInt":"0"}}
+[
+  {
+    "_id": { "$oid": "5de69a2a7ca886ad569b83e8" },
+    "name": "אבטיח",
+    "category": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "price": { "$numberInt": "44" },
+    "picture": "uploads/watermelon.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de69c1bf5ac03ad82081028" },
+    "name": "תפוז",
+    "category": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "price": { "$numberInt": "13" },
+    "picture": "uploads/orange.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de69d7df5ac03ad82081029" },
+    "name": "תות",
+    "category": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "price": { "$numberInt": "13" },
+    "picture": "uploads/strawberries.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de6acb5f5ac03ad8208102a" },
+    "name": "תפוח",
+    "category": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "price": { "$numberInt": "3" },
+    "picture": "uploads/apple.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de6ad2df5ac03ad8208102b" },
+    "name": "קיווי",
+    "category": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "price": { "$numberInt": "54" },
+    "picture": "uploads/kiwi.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de6ad7ef5ac03ad8208102c" },
+    "name": "בננה",
+    "category": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "price": { "$numberInt": "8" },
+    "picture": "uploads/banana.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de6b4ebf5ac03ad8208102d" },
+    "name": "גזר",
+    "category": { "$oid": "5de63cef2c8f54a2b4af944e" },
+    "price": { "$numberInt": "7" },
+    "picture": "uploads/carrot.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5deb47910a4027e7be71dc40" },
+    "name": "טימין",
+    "category": { "$oid": "5de63d072c8f54a2b4af944f" },
+    "price": { "$numberDouble": "4.5" },
+    "picture": "uploads/thyme.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5e0c762e91797d83f4b6a5ae" },
+    "name": "גמבה",
+    "category": { "$oid": "5de63cef2c8f54a2b4af944e" },
+    "price": { "$numberInt": "6" },
+    "picture": "uploads/redpepper.jpeg",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5e11ac755f5237a8e920860e" },
+    "name": "נענע",
+    "category": { "$oid": "5de63d072c8f54a2b4af944f" },
+    "price": { "$numberDouble": "2.5" },
+    "picture": "uploads/nana.jpeg",
+    "__v": { "$numberInt": "0" }
+  }
+]

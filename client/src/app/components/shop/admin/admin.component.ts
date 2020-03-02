@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
   categories: any;
   products: any = [];
   productsDisplay: any = [];
-  imageApiURL: string = "http://localhost:3000/";
+  imageApiURL: string = "http://localhost:8080/";
   editshow: boolean = false;
   productToEdit: object;
   productToEditId: string;

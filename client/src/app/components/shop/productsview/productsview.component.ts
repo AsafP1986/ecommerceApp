@@ -18,7 +18,7 @@ export class ProductsviewComponent implements OnInit {
   products: any = [];
   productsDisplay: any = [];
   categories: any;
-  imageApiURL: string = "http://localhost:3000/";
+  imageApiURL: string = "http://localhost:8080/";
   @Output() CartItemAdded = new EventEmitter();
   cartItems: any;
 

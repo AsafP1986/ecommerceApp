@@ -7,6 +7,7 @@ var passport = require("passport");
 var cors = require("cors");
 var db = require("./services/mongo");
 var session = require("express-session");
+var path = require("path");
 
 require("./middleware/passport");
 
@@ -35,8 +36,17 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/", shopRouter);
+app.use("/shop", shopRouter);
 app.use("/users", usersRouter);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/dist/client"));
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "client", "dist/client", "index.html")
+    );
+  });
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

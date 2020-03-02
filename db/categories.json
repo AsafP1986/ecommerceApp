@@ -1,3 +1,17 @@
-{"_id":{"$oid":"5de63c4e2c8f54a2b4af944d"},"name":"fruits","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de63cef2c8f54a2b4af944e"},"name":"vegetables","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5de63d072c8f54a2b4af944f"},"name":"herbs","__v":{"$numberInt":"0"}}
+[
+  {
+    "_id": { "$oid": "5de63c4e2c8f54a2b4af944d" },
+    "name": "fruits",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de63cef2c8f54a2b4af944e" },
+    "name": "vegetables",
+    "__v": { "$numberInt": "0" }
+  },
+  {
+    "_id": { "$oid": "5de63d072c8f54a2b4af944f" },
+    "name": "herbs",
+    "__v": { "$numberInt": "0" }
+  }
+]

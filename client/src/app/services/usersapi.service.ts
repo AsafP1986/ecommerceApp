@@ -12,6 +12,7 @@ export class UsersapiService {
 
   current_user: any;
   token: any;
+  serverUrl: string = "http://localhost:8080/";
 
   setcurrent_user(user) {
     this.current_user = user;
@@ -23,7 +24,7 @@ export class UsersapiService {
   }
 
   getUser() {
-    return this._http.get("users/getuser", {
+    return this._http.get(`${this.serverUrl}users/getuser`, {
       withCredentials: true
     });
   }
@@ -45,11 +46,13 @@ export class UsersapiService {
       "Content-Type": "application/json"
     };
     console.log("username to check  :", userNameToSend);
-    return this._http.post("users/check", userNameToSend, options).pipe(
-      map(res => {
-        return res;
-      })
-    );
+    return this._http
+      .post(`${this.serverUrl}users/check`, userNameToSend, options)
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
   }
 
   addUser(user: object) {
@@ -59,7 +62,7 @@ export class UsersapiService {
       "Content-Type": "application/json"
     };
     console.log("user to add  :", user);
-    return this._http.post("users/add", userToSend, options);
+    return this._http.post(`${this.serverUrl}users/add`, userToSend, options);
   }
 
   login(user) {
@@ -67,11 +70,11 @@ export class UsersapiService {
     const options = {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
-    return this._http.post("users/login", user, options);
+    return this._http.post(`${this.serverUrl}users/login`, user, options);
   }
 
   logout() {
-    return this._http.get("users/logout", {
+    return this._http.get(`${this.serverUrl}users/logout`, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -83,6 +86,10 @@ export class UsersapiService {
       "Content-Type": "application/json"
     };
     console.log("user to login, :", userId);
-    return this._http.post("users/getshopstatus", userIdToSend, options);
+    return this._http.post(
+      `${this.serverUrl}users/getshopstatus`,
+      userIdToSend,
+      options
+    );
   }
 }

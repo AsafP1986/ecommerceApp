@@ -9,6 +9,7 @@ export class CartitemComponent implements OnInit {
   @Input() item;
   @Output() item_price = new EventEmitter();
   @Output() remove_item = new EventEmitter();
+  serverUrl: string = "http://localhost:8080/";
   constructor() {}
 
   ngOnInit() {

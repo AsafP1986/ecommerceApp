@@ -8,6 +8,7 @@ import { HttpHeaders } from "@angular/common/http";
 export class ShopapiService {
   constructor(private _http: HttpClient) {}
 
+  serverUrl: string = "http://localhost:8080/shop/";
   cart: any;
   current_order: any;
   token: any;
@@ -48,7 +49,7 @@ export class ShopapiService {
 
   getAllProducts() {
     console.log("this.getToken()", this.getToken());
-    return this._http.get("products", {
+    return this._http.get(`${this.serverUrl}products`, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -59,7 +60,7 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post("products/add", product, options);
+    return this._http.post(`${this.serverUrl}products/add`, product, options);
   }
 
   editproduct(product) {
@@ -69,13 +70,13 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post("products/edit", product, options);
+    return this._http.post(`${this.serverUrl}products/edit`, product, options);
   }
 
   //categories
 
   getAllCategories() {
-    return this._http.get("categories", {
+    return this._http.get(`${this.serverUrl}categories`, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -90,7 +91,7 @@ export class ShopapiService {
       "Content-Type": "application/json"
     };
 
-    return this._http.post("cart/get", userToSend, options);
+    return this._http.post(`${this.serverUrl}cart/get`, userToSend, options);
   }
 
   refreshcart(cart) {
@@ -103,7 +104,11 @@ export class ShopapiService {
       }
     };
 
-    return this._http.post("cart/refresh", cartToSend, options);
+    return this._http.post(
+      `${this.serverUrl}cart/refresh`,
+      cartToSend,
+      options
+    );
   }
 
   emptyCart(cartId) {
@@ -114,7 +119,11 @@ export class ShopapiService {
       "Content-Type": "application/json"
     };
 
-    return this._http.post("cart/empty", cartIdToSend, options);
+    return this._http.post(
+      `${this.serverUrl}cart/empty`,
+      cartIdToSend,
+      options
+    );
   }
 
   //Cart items
@@ -125,11 +134,11 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post("cartitem/new", cart_item, options);
+    return this._http.post(`${this.serverUrl}cartitem/new`, cart_item, options);
   }
 
   getCartItems(cart) {
-    return this._http.get(`cartitems/${cart}`, {
+    return this._http.get(`${this.serverUrl}cartitems/${cart}`, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
@@ -142,13 +151,18 @@ export class ShopapiService {
       "Content-Type": "application/json"
     };
 
-    return this._http.post("cartitem/remove", itemToSend, options);
+    return this._http.post(
+      `${this.serverUrl}cartitem/remove`,
+      itemToSend,
+      options
+    );
   }
 
   getstatus() {
-    return this._http.get("status", {
-      headers: { Authorization: `Bearer ${this.getToken()}` }
-    });
+    return this._http.get(`${this.serverUrl}status`);
+    // , {
+    //   headers: { Authorization: `Bearer ${this.getToken()}` }
+    // }
   }
 
   sendOrder(order) {
@@ -157,11 +171,11 @@ export class ShopapiService {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     };
 
-    return this._http.post("orders/new", order, options);
+    return this._http.post(`${this.serverUrl}orders/new`, order, options);
   }
 
   avalShippingDates() {
-    return this._http.get("orders/checkshippingdates", {
+    return this._http.get(`${this.serverUrl}orders/checkshippingdates`, {
       headers: { Authorization: `Bearer ${this.getToken()}` }
     });
   }
