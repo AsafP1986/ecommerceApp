@@ -42,9 +42,9 @@ app.use("/users", usersRouter);
 // "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm build --prefix client"
 
 if (process.env.NODE_ENV === "production") {
-  // app.use(express.static("client/dist/"));
+  app.use(express.static("client/dist/"));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve("client", "dist", "client", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "index.html"));
   });
 }
 
