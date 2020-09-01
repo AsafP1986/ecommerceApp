@@ -13,6 +13,7 @@ require("./middleware/passport");
 
 var shopRouter = require("./routes/shopRoutes");
 var usersRouter = require("./routes/usersRoutes");
+const { port } = require("./services/mongo");
 
 var app = express();
 
@@ -28,7 +29,7 @@ app.use(
   session({
     secret: "keyboard cat",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 app.use(express.static(path.join(__dirname, "public")));
@@ -39,8 +40,6 @@ app.use(passport.session());
 app.use("/shop", shopRouter);
 app.use("/users", usersRouter);
 
-// "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm build --prefix client"
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/dist/"));
   app.get("*", (req, res) => {
@@ -48,13 +47,15 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const PORT = process.env.PORT || 5000;
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
