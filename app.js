@@ -13,12 +13,13 @@ require("./middleware/passport");
 var shopRouter = require("./routes/shopRoutes");
 var usersRouter = require("./routes/usersRoutes");
 const { port } = require("./services/mongo");
+console.log('__dirname', __dirname)
 
 var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-console.log('__dirname', __dirname)
+console.log('__dirname1', __dirname)
 app.set("view engine", "ejs");
 
 app.use(logger("dev"));
@@ -42,6 +43,7 @@ app.use("/users", usersRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/dist/")));
+  console.log('path.join(__dirname, "client/dist/")', path.join(__dirname, "client/dist/"))
   app.get("*", (req, res) => {
     console.log('__dirname2', __dirname)
     res.sendFile(path.resolve( "client/dist/index.html"));
