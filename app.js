@@ -43,10 +43,10 @@ app.use("/users", usersRouter);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/dist/"));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "index.html"));
+    res.sendFile(path.resolve(__dirname,  "index.html"));
   });
 }
-
+// "client",
 const PORT = process.env.PORT || 5000;
 
 // catch 404 and forward to error handler

@@ -1,6 +1,9 @@
 var mongoose = require("mongoose");
+
+const url = process.env.MONGO_URL || 'mongodb+srv://pasaf1:o0tVCzlsrIAysF0F@ecommerceapp-bckac.mongodb.net/test?retryWrites=true&w=majority'
+// 'mongodb://localhost/ecommerceapp' 
 mongoose.connect(
-  "mongodb+srv://pasaf1:08shay03@ecommerceapp-bckac.mongodb.net/EcommerceApp?retryWrites=true&w=majority",
+  url,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,3 +22,5 @@ module.exports = db;
 // // mongodb+srv://pasaf1:<password>@ecommerceapp-bckac.mongodb.net/test?retryWrites=true&w=majority
 
 // mongodb://localhost/ecommerceapp
+
+// "mongodb+srv://pasaf1:<password>@ecommerceapp.bckac.mongodb.net/<dbname>?retryWrites=true&w=majority"
