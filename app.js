@@ -42,11 +42,11 @@ app.use("/shop", shopRouter);
 app.use("/users", usersRouter);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/dist/")));
+  app.use(express.static(path.join(__dirname, "client/dist/client")));
   console.log('path.join(__dirname, "client/dist/")', path.join(__dirname, "client/dist/"))
   app.get("*", (req, res) => {
     console.log('__dirname2', __dirname)
-    res.sendFile(path.resolve( __dirname, "client/dist/index.html"));
+    res.sendFile(path.resolve( __dirname, "client/dist/client/index.html"));
   });
 }
 // "client",
