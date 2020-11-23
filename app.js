@@ -1,6 +1,5 @@
 var createError = require("http-errors");
 var express = require("express");
-var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require("passport");
@@ -19,6 +18,7 @@ var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
+console.log('__dirname', __dirname)
 app.set("view engine", "ejs");
 
 app.use(logger("dev"));
@@ -41,13 +41,14 @@ app.use("/shop", shopRouter);
 app.use("/users", usersRouter);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/dist/"));
+  app.use(express.static(path.join(__dirname, "client/dist/")));
   app.get("*", (req, res) => {
+    console.log('__dirname', __dirname)
     res.sendFile(path.resolve(__dirname,  "index.html"));
   });
 }
 // "client",
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
