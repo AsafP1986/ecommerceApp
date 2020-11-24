@@ -46,8 +46,7 @@ if (process.env.NODE_ENV === "production") {
   console.log('path.join(__dirname, "client/dist/")', path.join(__dirname, "client/dist/"))
   app.get("*", (req, res) => {
     console.log('__dirname2', __dirname)
-    console.log('req', req)
-    console.log('res', res)
+   
     res.sendFile(path.join( __dirname, "client/dist/client/index.html"));
   });
 }
