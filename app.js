@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
     console.log('__dirname2', __dirname)
    
-    res.sendFile(path.resolve( __dirname, "client/dist/index.html"));
+    res.sendFile(path.resolve( __dirname, "dist/index.html"));
   });
 }
 // "client",
